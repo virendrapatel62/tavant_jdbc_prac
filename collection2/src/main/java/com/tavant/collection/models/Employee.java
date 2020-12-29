@@ -15,7 +15,7 @@ public class Employee implements Comparable<Employee> {
 	private String extention;
 	private String email;
 	private String officeCode;
-	private int reportsTo;
+	private Integer reportsTo;
 	private String jobTitle;
 	
 	@Override
