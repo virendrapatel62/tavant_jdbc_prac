@@ -4,28 +4,15 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.mysql.cj.jdbc.MysqlDataSource;
 
+@Component
 public class DBUtils {
-	private FileUtils fileUtils = FileUtils.getInstance();
-	private static DBUtils dbUtils;
-
-	private DBUtils() {
-
-	}
-
-	public static DBUtils getInstance() {
-
-		if (dbUtils == null) {
-			synchronized (DBUtils.class) {
-				if (dbUtils == null) {
-					dbUtils = new DBUtils();
-				}
-			}
-		}
-
-		return dbUtils;
-	}
+	@Autowired
+	private FileUtils fileUtils;
 
 	public MysqlDataSource getDataSource() {
 		MysqlDataSource dataSource = new MysqlDataSource();

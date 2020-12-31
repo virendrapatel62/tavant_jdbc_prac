@@ -3,25 +3,19 @@ package com.tavant.collection.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.tavant.collection.dao.*;
 import com.tavant.collection.models.*;
 
+@Service
 public class LocationServiceImpl implements LocationService {
 
-	private LocationDao locationDao = LocationDaoImpl.getInstance();
+	@Autowired
+	private LocationDao locationDao ;
 
-	private static LocationService locationService;
-
-	public static LocationService getInstance() {
-		if (locationService == null) {
-			synchronized (LocationServiceImpl.class) {
-				if (locationService == null) {
-					locationService = new LocationServiceImpl();
-				}
-			}
-		}
-		return locationService;
-	}
+	
 
 	private LocationServiceImpl() {
 		// TODO Auto-generated constructor stub

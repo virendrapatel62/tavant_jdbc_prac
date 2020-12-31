@@ -47,12 +47,12 @@ public class ServiceFactory {
 
 		} else {
 //			initialize all objects
-			EmployeeService employeeService = EmployeeServiceImpl.getInstance();
-			DepartmentService departmentService = DepartmentServiceImpl.getInstance();
-			LocationService locationService = LocationServiceImpl.getInstance();
-			services.add(employeeService);
-			services.add(locationService);
-			services.add(departmentService);
+//			EmployeeService employeeService = EmployeeServiceImpl.getInstance();
+//			DepartmentService departmentService = DepartmentServiceImpl.getInstance();
+//			LocationService locationService = LocationServiceImpl.getInstance();
+//			services.add(employeeService);
+//			services.add(locationService);
+//			services.add(departmentService);
 
 		}
 		return services;

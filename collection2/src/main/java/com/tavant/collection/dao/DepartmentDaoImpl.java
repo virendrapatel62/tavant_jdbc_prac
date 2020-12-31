@@ -4,24 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
 import com.tavant.collection.models.Department;
 
+@Repository
 public class DepartmentDaoImpl implements DepartmentDao {
 	private List<Department> departments = new ArrayList<Department>(20);
-	private static DepartmentDao departmentDao ;
-	private DepartmentDaoImpl() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public static DepartmentDao getInstance() {
-		if(departmentDao == null) {
-			synchronized (DepartmentDaoImpl.class) {
-				if(departmentDao == null)
-					departmentDao = new DepartmentDaoImpl();
-			}
-		}
-		return departmentDao;
-	}
 
 	@Override
 	public Optional<Department> getDepartmentById(String departmentId) {
@@ -32,11 +21,9 @@ public class DepartmentDaoImpl implements DepartmentDao {
 		return Optional.empty();
 	}
 
-	
-
 	@Override
 	public Boolean isExists(String departmentId) {
-		return (this.getDepartmentById(departmentId)!= null) ? true : false;
+		return (this.getDepartmentById(departmentId) != null) ? true : false;
 	}
 
 	@Override
@@ -61,6 +48,5 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
 		return this.departments.remove(this.getDepartmentById(departmentId).get());
 	}
-
 
 }

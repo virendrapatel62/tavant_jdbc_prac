@@ -23,12 +23,12 @@ public class Main {
 	}
 
 	private static void deleteEmployeeById() {
-		EmployeeService employeeService = EmployeeServiceImpl.getInstance();
+		EmployeeService employeeService = new EmployeeServiceImpl();
 		System.out.println(employeeService.deleteEmploye(1771).get());
 	}
 
 	private static void saveEmployee() {
-		EmployeeService employeeService = EmployeeServiceImpl.getInstance();
+		EmployeeService employeeService =  new EmployeeServiceImpl();
 		Employee employee = new Employee();
 		employee.setEmail("patelvirendra62@gmail.com");
 		employee.setFirstName("Virendra Kumar");
@@ -45,7 +45,7 @@ public class Main {
 	}
 	
 	private static void updateEmployee() throws Exception {
-		EmployeeService employeeService = EmployeeServiceImpl.getInstance();
+		EmployeeService employeeService = new EmployeeServiceImpl();
 		Employee employee = new Employee();
 		employee.setEmail("updated@gmail.com");
 		employee.setFirstName("Updated Kumar");
@@ -66,17 +66,17 @@ public class Main {
 	}
 
 	private static void isExists() {
-		EmployeeService employeeService = EmployeeServiceImpl.getInstance();
+		EmployeeService employeeService =  new EmployeeServiceImpl();
 		System.out.println(employeeService.isExists(1003));
 	}
 
 	private static void getAll() {
-		EmployeeService employeeService = EmployeeServiceImpl.getInstance();
+		EmployeeService employeeService =  new EmployeeServiceImpl();
 		employeeService.getEmployees().get().forEach(System.out::println);
 	}
 
 	private static void getById() {
-		EmployeeService employeeService = EmployeeServiceImpl.getInstance();
+		EmployeeService employeeService =  new EmployeeServiceImpl();
 		Optional<Employee> optional = employeeService.getEmployeeById(1002);
 
 		if (optional.isPresent())

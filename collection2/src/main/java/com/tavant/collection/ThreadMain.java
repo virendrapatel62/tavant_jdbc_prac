@@ -6,7 +6,7 @@ public class ThreadMain{
 
 	public static void main(String[] args) {
 		Runnable runnable = ()->{
-			System.out.println(EmployeeServiceImpl.getInstance().hashCode());
+//			System.out.println(EmployeeServiceImpl.getInstance().hashCode());
 		};
 		
 		Thread thread = new Thread(runnable);

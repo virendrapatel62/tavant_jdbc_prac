@@ -8,30 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.tavant.collection.exceptions.InvalidNameException;
 import com.tavant.collection.exceptions.InvalidSalaryException;
 import com.tavant.collection.models.Employee;
 import com.tavant.collection.utils.DBUtils;
 
+@Repository
 public class EmployeeDaoImpl implements EmployeeDao {
-
-	private static EmployeeDao employeeDao;
-	private DBUtils dbUtils = DBUtils.getInstance();
-
-	private EmployeeDaoImpl() {
-	}
-
-	public static EmployeeDao getInstance() {
-		if (employeeDao == null) {
-			synchronized (EmployeeDaoImpl.class) {
-				if (employeeDao == null) {
-					employeeDao = new EmployeeDaoImpl();
-				}
-			}
-		}
-
-		return employeeDao;
-	}
+	@Autowired
+	private DBUtils dbUtils;
 
 	@Override
 	public boolean addEmployee(Employee emp) {
@@ -67,7 +55,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public Optional<Employee> updateEmployee(Integer empId, Employee emp)
 			throws InvalidSalaryException, InvalidNameException {
-		
+
 		String query = "UPDATE employees SET lastName = ?, firstName = ?, extension = ?,email = ?, officeCode = ?, reportsTo = ? ,jobTitle = ? WHERE employeeNumber = ?";
 
 		Connection connection = dbUtils.getConnection();

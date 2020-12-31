@@ -3,26 +3,17 @@ package com.tavant.collection.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.tavant.collection.dao.*;
-import com.tavant.collection.models.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.tavant.collection.dao.DepartmentDao;
+import com.tavant.collection.models.Department;
+
+@Service
 public class DepartmentServiceImpl implements DepartmentService {
-		
-	private DepartmentDao departmentDao = DepartmentDaoImpl.getInstance();
-	private static DepartmentService departmentServiceImpl;
-	
-	public static DepartmentService getInstance() {
-		if(departmentServiceImpl==null)
-			synchronized (DepartmentServiceImpl.class) {
-				if(departmentServiceImpl==null) {
-					departmentServiceImpl = new DepartmentServiceImpl();
-				}
-			}
-		return departmentServiceImpl;
-	}
-	private DepartmentServiceImpl() {
-		// TODO Auto-generated constructor stub
-	}
+
+	@Autowired
+	private DepartmentDao departmentDao;
 
 	@Override
 	public Boolean addDepartment(Department department) {
@@ -42,7 +33,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public Boolean deleteDepartment(String departmentId) {
 		return this.departmentDao.deleteDepartment(departmentId);
-		
+
 	}
 
 	@Override
@@ -54,6 +45,5 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public Boolean isExists(String departmentId) {
 		return this.departmentDao.isExists(departmentId);
 	}
-	
-	
+
 }
