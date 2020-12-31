@@ -35,15 +35,68 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public boolean addEmployee(Employee emp) {
-		// TODO Auto-generated method stub
+		Employee employee = null;
+		Connection connection = dbUtils.getConnection();
+
+		try {
+			String query = "INSERT into employees" + " (firstName , lastName , extension , email , "
+					+ "officeCode , reportsTo , jobTitle , employeeNumber) values (? , ? , ? , ? , ?, ? , ? , ?)";
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			statement.setString(1, emp.getFirstName());
+			statement.setString(2, emp.getLastName());
+			statement.setString(3, emp.getExtention());
+			statement.setString(4, emp.getEmail());
+			statement.setString(5, emp.getOfficeCode());
+			statement.setInt(6, emp.getReportsTo());
+			statement.setString(7, emp.getJobTitle());
+			statement.setInt(8, emp.getEmployeeId());
+
+			int updated = statement.executeUpdate();
+
+			return (updated == 1) ? true : false;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbUtils.closeConnection(connection);
+		}
 		return false;
 	}
 
 	@Override
-	public Optional<Employee> updateEmployee(String empId, Employee employee)
+	public Optional<Employee> updateEmployee(Integer empId, Employee emp)
 			throws InvalidSalaryException, InvalidNameException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		String query = "UPDATE employees SET lastName = ?, firstName = ?, extension = ?,email = ?, officeCode = ?, reportsTo = ? ,jobTitle = ? WHERE employeeNumber = ?";
+
+		Connection connection = dbUtils.getConnection();
+
+		try {
+			PreparedStatement statement = connection.prepareStatement(query);
+
+			statement.setString(1, emp.getLastName());
+			statement.setString(2, emp.getFirstName());
+
+			statement.setString(3, emp.getExtention());
+			statement.setString(4, emp.getEmail());
+			statement.setString(5, emp.getOfficeCode());
+			statement.setInt(6, emp.getReportsTo());
+			statement.setString(7, emp.getJobTitle());
+			statement.setInt(8, empId);
+
+			int updated = statement.executeUpdate();
+			if (updated > 0) {
+				return getEmployeeById(empId);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbUtils.closeConnection(connection);
+		}
+
+		return Optional.empty();
 	}
 
 	@Override
@@ -69,7 +122,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				employee.setJobTitle(resultSet.getString("jobTitle"));
 
 				employees.add(employee);
-
 			}
 
 			return Optional.of(employees);
@@ -82,21 +134,44 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public Optional<Employee> deleteEmploye(String empid) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<Employee> deleteEmploye(Integer empid) {
+		Employee employee = null;
+		Connection connection = dbUtils.getConnection();
+
+		try {
+			Optional<Employee> optional = getEmployeeById(empid);
+			if (!optional.isPresent()) {
+				return Optional.ofNullable(employee);
+			} else {
+				employee = optional.get();
+			}
+			PreparedStatement statement = connection.prepareStatement("DELETE FROM employees where employeeNumber = ?");
+			statement.setInt(1, empid);
+			int updated = statement.executeUpdate();
+
+			if (updated > 0) {
+				return Optional.ofNullable(employee);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dbUtils.closeConnection(connection);
+		}
+		return Optional.ofNullable(employee);
 	}
 
 	@Override
-	public Optional<Employee> getEmployeeById(String empid) {
-		
+	public Optional<Employee> getEmployeeById(Integer empid) {
+
 		Employee employee = null;
 		Connection connection = dbUtils.getConnection();
-		
+
 		try {
-			Statement statement = connection.createStatement();
-			String query = String.format("SELECT * FROM employees where employeeNumber = %s", empid);
-			ResultSet resultSet = statement.executeQuery(query);
+			PreparedStatement statement = connection
+					.prepareStatement("SELECT * FROM employees where employeeNumber = ?");
+			statement.setInt(1, empid);
+			ResultSet resultSet = statement.executeQuery();
 
 			if (resultSet.next()) {
 				employee = new Employee();
@@ -109,7 +184,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				employee.setReportsTo(resultSet.getInt("reportsTo"));
 				employee.setJobTitle(resultSet.getString("jobTitle"));
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -120,9 +195,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public boolean isExists(String empId) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isExists(Integer empId) {
+		return getEmployeeById(empId).isPresent();
 	}
-
 }

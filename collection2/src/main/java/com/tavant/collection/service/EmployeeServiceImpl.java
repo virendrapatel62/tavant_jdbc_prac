@@ -32,7 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Optional<Employee> updateEmployee(String empId, Employee employee) throws InvalidNameException,  InvalidSalaryException {
+	public Optional<Employee> updateEmployee(Integer empId, Employee employee) throws InvalidNameException,  InvalidSalaryException {
 		return this.employeeDao.updateEmployee(empId, employee);
 	}
 
@@ -43,17 +43,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Optional<Employee> deleteEmploye(String empid) {
+	public Optional<Employee> deleteEmploye(Integer empid) {
 		return this.employeeDao.deleteEmploye(empid);
 	}
 
 	@Override
-	public Optional<Employee> getEmployeeById(String empid) {
+	public Optional<Employee> getEmployeeById(Integer empid) {
 		return this.employeeDao.getEmployeeById(empid);
 	}
 
 	@Override
-	public boolean isExists(String empId) {
+	public boolean isExists(Integer empId) {
 		return this.employeeDao.isExists(empId);
 	}
 

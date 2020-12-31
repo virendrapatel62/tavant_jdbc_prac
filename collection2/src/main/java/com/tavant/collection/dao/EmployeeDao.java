@@ -9,9 +9,9 @@ import com.tavant.collection.models.Employee;
 
 public interface EmployeeDao {
 	public boolean addEmployee(Employee emp);
-	public Optional<Employee> updateEmployee(String empId , Employee employee)throws InvalidSalaryException , InvalidNameException;
+	public Optional<Employee> updateEmployee(Integer empId , Employee employee)throws InvalidSalaryException , InvalidNameException;
 	public Optional<List<Employee>> getEmployees();
-	public Optional<Employee> deleteEmploye(String empid);
-	public Optional<Employee> getEmployeeById(String empid);
-	public boolean isExists(String empId);
+	public Optional<Employee> deleteEmploye(Integer empid);
+	public Optional<Employee> getEmployeeById(Integer empid);
+	public boolean isExists(Integer empId);
 }
