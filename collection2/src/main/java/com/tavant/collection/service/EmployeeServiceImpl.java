@@ -15,38 +15,42 @@ import com.tavant.collection.models.Employee;
 public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Autowired
-	private EmployeeDao employeeDao;
+	private EmployeeDao employeeDaoImpl;
+	
+	private EmployeeServiceImpl() {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public boolean addEmployee(Employee emp) {
-		return this.employeeDao.addEmployee(emp);
+		return this.employeeDaoImpl.addEmployee(emp);
 	}
 
 	@Override
 	public Optional<Employee> updateEmployee(Integer empId, Employee employee)
 			throws InvalidNameException, InvalidSalaryException {
-		return this.employeeDao.updateEmployee(empId, employee);
+		return this.employeeDaoImpl.updateEmployee(empId, employee);
 	}
 
 	@Override
 	public Optional<List<Employee>> getEmployees() {
 
-		return this.employeeDao.getEmployees();
+		return this.employeeDaoImpl.getEmployees();
 	}
 
 	@Override
 	public Optional<Employee> deleteEmploye(Integer empid) {
-		return this.employeeDao.deleteEmploye(empid);
+		return this.employeeDaoImpl.deleteEmploye(empid);
 	}
 
 	@Override
 	public Optional<Employee> getEmployeeById(Integer empid) {
-		return this.employeeDao.getEmployeeById(empid);
+		return this.employeeDaoImpl.getEmployeeById(empid);
 	}
 
 	@Override
 	public boolean isExists(Integer empId) {
-		return this.employeeDao.isExists(empId);
+		return this.employeeDaoImpl.isExists(empId);
 	}
 
 }

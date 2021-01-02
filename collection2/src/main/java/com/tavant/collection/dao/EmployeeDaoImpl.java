@@ -16,7 +16,7 @@ import com.tavant.collection.exceptions.InvalidSalaryException;
 import com.tavant.collection.models.Employee;
 import com.tavant.collection.utils.DBUtils;
 
-@Repository
+@Repository("employeeDaoImpl")
 public class EmployeeDaoImpl implements EmployeeDao {
 	@Autowired
 	private DBUtils dbUtils;
