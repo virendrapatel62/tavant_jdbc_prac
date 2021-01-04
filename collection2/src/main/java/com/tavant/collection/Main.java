@@ -13,17 +13,26 @@ public class Main {
 
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DBConfig.class);
 
-		Arrays.asList(context.getBeanDefinitionNames()).forEach(System.out::println);
-
-		System.out.println(context.getBean(DBUtils.class));
-//		System.out.println(context.getBean("employeeDaoImpl"));
-
+		Arrays
+		.asList(context.getBeanDefinitionNames()).forEach(System.out::println);
 		
-		System.err.println("--------ALL Employeesss-------");
+//		System.out.println(context.getBean(DBUtils.class));
+//		System.out.println(context.getBean("employeeDaoImpl"));
+		
+		
+		
+		System.out.println("Main.main()");
+		System.out.println("--------ALL Employeesss-------");
 		EmployeeService employeeService = (EmployeeService)context.getBean("EmployeeServiceImpl");
 		employeeService.getEmployees().get().forEach(e->{
-			System.err.println(e.getFirstName());
+			System.out.println(e.getFirstName());
 		});
+		
+		context.close();
+		
+		
+//		DBUtils dbUtils = context.getBean(DBUtils.class);
+//		System.out.println(dbUtils.getDataSource());
 		
 
 	}

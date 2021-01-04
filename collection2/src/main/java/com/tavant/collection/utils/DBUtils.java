@@ -4,41 +4,34 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import javax.sql.DataSource;
+import javax.xml.crypto.Data;
+
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 
 @Component
+@PropertySource("classpath:application.properties")
 public class DBUtils {
+	
 	@Autowired
-	private FileUtils fileUtils;
+	private Environment environment;
 
-	public MysqlDataSource getDataSource() {
-		MysqlDataSource dataSource = new MysqlDataSource();
-		Properties properties = fileUtils.getProperties();
-
-		String serverName = properties.getProperty("db.servername");
-		String port = properties.getProperty("db.port");
-		String password = properties.getProperty("db.password");
-		String username = properties.getProperty("db.username");
-		String databaseName = properties.getProperty("db.databasename");
-
-		dataSource.setServerName(serverName);
-		dataSource.setPort(Integer.parseInt(port));
-		dataSource.setPassword(password);
-		dataSource.setUser(username);
-		dataSource.setDatabaseName(databaseName);
-		try {
-			dataSource.setSslMode("DISABLED");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
+	public DataSource getDataSource() {
+		System.out.println("DBUtils.getDataSource()");
+		BasicDataSource dataSource = new BasicDataSource();
+		String url = environment.getProperty("db.url");
+		dataSource.setUrl(url);
 		return dataSource;
 	}
 
 	public void closeConnection(Connection connection) {
+		System.out.println("DBUtils.closeConnection()");
 		try {
 			connection.close();
 		} catch (SQLException e) {
@@ -47,8 +40,8 @@ public class DBUtils {
 	}
 
 	public Connection getConnection() {
+		System.out.println("DBUtils.getConnection()");
 		Connection connection = null;
-
 		try {
 			connection = getDataSource().getConnection();
 		} catch (SQLException e) {
